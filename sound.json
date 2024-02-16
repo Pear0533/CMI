@@ -1,0 +1,20 @@
+{
+	"Event 1": {
+		"SoundPath": "Oedon1.mp3",
+		"Pointer1": "0x28",
+		"Pointer2": "0x9C4",
+		"Startbit": 7,
+		"Type": 6,
+		"FadeInterval": 10,
+		"Loop": true
+	},
+	"Event 2": {
+		"SoundPath": "Oedon2.mp3",
+		"Pointer1": "0x28",
+		"Pointer2": "0x9C4",
+		"Startbit": 6,
+		"Type": 6,
+		"FadeInterval": 10,
+		"Loop": true
+	}
+}
