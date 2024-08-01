@@ -8,7 +8,7 @@ namespace CMI
 {
     internal static class Program
     {
-        private const bool isUsingTestMode = false;
+        private const bool isUsingTestMode = true;
 
         /// <summary>
         ///     The main entry point for the application.
@@ -20,7 +20,7 @@ namespace CMI
             {
                 if (isUsingTestMode)
                 {
-                    CMI.modSoundFolderPath = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\ELDEN RING\\Game\\TheGardenOfEyesOedonToPear\\sound";
+                    CMI.modSoundFolderPath = "D:\\SteamLibrary\\steamapps\\common\\ELDEN RING\\Game\\modengine2\\mod\\sound";
                     CMI.soundJsonFilePath = $"{CMI.appRootPath}\\sound.json";
                 }
                 else

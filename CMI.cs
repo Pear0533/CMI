@@ -18,6 +18,8 @@ namespace CMI
     {
         private const string eventFlagManQuery = "48 8B 3D ?? ?? ?? ?? 48 85 FF ?? ?? 32 C0 E9";
         private const string gameDataManQuery = "48 8B 05 ?? ?? ?? ?? 48 85 C0 74 05 48 8B 40 58 C3 C3";
+        // TODO: WIP
+        private const string menuManQuery = "";
         public static string appRootPath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}";
         public static string modSoundFolderPath;
         public static string soundJsonFilePath;
@@ -26,6 +28,7 @@ namespace CMI
         private static IntPtr eldenRingProcessHandle;
         private static IntPtr eventFlagMan;
         private static long gameDataMan;
+        private static long menuMan;
         private static Scanner eventFlagManScanner;
         private static Scanner gameDataManScanner;
         private static int masterVolume;
@@ -72,6 +75,18 @@ namespace CMI
         private static int ReadVolume(long baseAddress, int offset)
         {
             return ReadByte((IntPtr)ReadLong((IntPtr)baseAddress + 0x58) + offset) * 10;
+        }
+
+        /*
+        private static bool ReadIsLoadingScreenActive(long baseAddress, int offset)
+        {
+            return ReadByte((IntPtr)ReadLong((IntPtr)baseAddress + 0x3D6B7D0) + offset) != 0;
+        }
+        */
+
+        private static bool ReadIsLoadingScreenActive(IntPtr baseAddress, int offset)
+        {
+            return ReadByte((IntPtr)ReadLong(baseAddress + 0x3D6B7D0) + offset) != 0;
         }
 
         private void SendStatusLogMessage(string message)
@@ -191,8 +206,6 @@ namespace CMI
             return currentVolume;
         }
 
-        // NOTE: CHECK
-
         private void UpdateUISoundPlayerState(SoundEvent soundEvent)
         {
             string originalUiSoundPlayerURL = uiSoundPlayer.URL;
@@ -281,6 +294,12 @@ namespace CMI
             if (e.Node.Parent == null) UpdateUISoundPlayerState(soundEvents[e.Node.Index]);
         }
 
+        private static bool IsLoadingScreenActive()
+        {
+            ProcessModule mainModule = mainEldenRingProcess.MainModule;
+            return mainModule != null && ReadIsLoadingScreenActive(mainModule.BaseAddress, 0x728);
+        }
+
         public class SoundEvent
         {
             public bool Activated { get; set; }
@@ -334,14 +353,18 @@ namespace CMI
                 return soundEvents.IndexOf(overrideSoundEvent) >= soundEvents.IndexOf(this);
             }
 
+            // TODO: WIP
+
             public bool ShouldStopEvent(TreeView soundEventsListBox)
             {
-                return !Activated && soundEventsListBox.SelectedNode == EventNode && MediaPlayer.CurrentSong == SoundPath;
+                return IsLoadingScreenActive() || !Activated && soundEventsListBox.SelectedNode == EventNode && MediaPlayer.CurrentSong == SoundPath;
             }
+
+            // TODO: WIP
 
             public bool ShouldPlayEvent()
             {
-                return Activated && !DoesOtherEventOverride() && MediaPlayer.CurrentSong != SoundPath;
+                return !IsLoadingScreenActive() && Activated && !DoesOtherEventOverride() && MediaPlayer.CurrentSong != SoundPath;
             }
 
             public void StopEvent()
