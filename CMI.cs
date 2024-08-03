@@ -225,7 +225,10 @@ namespace CMI
 
         private static void MediaPlayerOnEndHandler(SoundEvent soundEvent)
         {
-            if (soundEvent.Loop) soundEvent.MediaPlayer.CurrentSong = null;
+            if (!soundEvent.Loop) return;
+            soundEvent.MediaPlayer.CurrentSong = null;
+            // TODO: WIP
+            if (!soundEvent.HasLooped) soundEvent.HasLooped = true;
         }
 
         private void SelectEventNode(TreeNode eventNode, bool resetUIPlayerPos)
@@ -314,6 +317,9 @@ namespace CMI
             public int Type { get; set; }
             public int FadeInterval { get; set; }
             public bool Loop { get; set; }
+            public bool HasLooped { get; set; }
+            public int StartSeconds { get; set; }
+            public int LoopStartSeconds { get; set; }
 
             public static SoundEvent Serialize(string name, JObject soundEventJson)
             {
@@ -379,6 +385,9 @@ namespace CMI
                 MediaPlayer.CrossfadeTime = FadeInterval;
                 MediaPlayer.Play(SoundPath, FadeInterval > 0);
                 MediaPlayer.CurrentSong = SoundPath;
+
+                // TODO: WIP
+                MediaPlayer.Position = HasLooped ? LoopStartSeconds : StartSeconds;
                 MediaPlayer.OnPlayerMediaEnd += e => MediaPlayerOnEndHandler(this);
             }
 
