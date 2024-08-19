@@ -20,7 +20,7 @@ namespace CMI
             {
                 if (isUsingTestMode)
                 {
-                    CMI.modSoundFolderPath = "D:\\SteamLibrary\\steamapps\\common\\ELDEN RING\\Game\\modengine2\\mod\\sound";
+                    CMI.modSoundFolderPath = "C:\\Users\\Isaac Fisher\\Downloads\\ConvergenceER\\Convergence\\sound";
                     CMI.soundJsonFilePath = $"{CMI.appRootPath}\\sound.json";
                 }
                 else

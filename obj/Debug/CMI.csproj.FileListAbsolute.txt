@@ -122,3 +122,27 @@ C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSof
 C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\CMI GUI\CMI\obj\Debug\CMI.csproj.CopyComplete
 C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\CMI GUI\CMI\obj\Debug\CMI.exe
 C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\CMI GUI\CMI\obj\Debug\CMI.pdb
+C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\Repositories\Active\CMI\bin\Debug\sound.json
+C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\Repositories\Active\CMI\bin\Debug\CMI.exe.config
+C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\Repositories\Active\CMI\bin\Debug\CMI.exe
+C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\Repositories\Active\CMI\bin\Debug\CMI.pdb
+C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\Repositories\Active\CMI\bin\Debug\memory.dll
+C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\Repositories\Active\CMI\bin\Debug\Newtonsoft.Json.Bson.dll
+C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\Repositories\Active\CMI\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\Repositories\Active\CMI\bin\Debug\Newtonsoft.Json.pdb
+C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\Repositories\Active\CMI\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\Repositories\Active\CMI\bin\Debug\Newtonsoft.Json.Bson.pdb
+C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\Repositories\Active\CMI\bin\Debug\Newtonsoft.Json.Bson.xml
+C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\Repositories\Active\CMI\bin\Debug\Interop.WMPLib.dll
+C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\Repositories\Active\CMI\bin\Debug\AxInterop.WMPLib.dll
+C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\Repositories\Active\CMI\obj\Debug\CMI.csproj.AssemblyReference.cache
+C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\Repositories\Active\CMI\obj\Debug\Interop.WMPLib.dll
+C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\Repositories\Active\CMI\obj\Debug\AxInterop.WMPLib.dll
+C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\Repositories\Active\CMI\obj\Debug\CMI.csproj.ResolveComReference.cache
+C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\Repositories\Active\CMI\obj\Debug\CMI.CMI.resources
+C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\Repositories\Active\CMI\obj\Debug\CMI.Properties.Resources.resources
+C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\Repositories\Active\CMI\obj\Debug\CMI.csproj.GenerateResource.cache
+C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\Repositories\Active\CMI\obj\Debug\CMI.csproj.CoreCompileInputs.cache
+C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\Repositories\Active\CMI\obj\Debug\CMI.csproj.CopyComplete
+C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\Repositories\Active\CMI\obj\Debug\CMI.exe
+C:\Users\Isaac Fisher\Downloads\Syncthing Shared\Game Mods & Tools\Tools\FromSoftware\Repositories\Active\CMI\obj\Debug\CMI.pdb

@@ -181,7 +181,7 @@ namespace CMI
                 soundEvents.Add(SoundEvent.Serialize(soundEvent.Name, (JObject)soundEvent.Value));
             foreach (SoundEvent soundEvent in soundEvents)
             {
-                foreach (PropertyInfo prop in typeof(SoundEvent).GetProperties().Skip(5))
+                foreach (PropertyInfo prop in typeof(SoundEvent).GetProperties().Skip(6))
                 {
                     var propertyNode = new TreeNode { Text = prop.Name };
                     propertyNode.Nodes.Add(prop.GetValue(soundEvent).ToString());
@@ -228,7 +228,8 @@ namespace CMI
             if (!soundEvent.Loop) return;
             soundEvent.MediaPlayer.CurrentSong = null;
             // TODO: WIP
-            if (!soundEvent.HasLooped) soundEvent.HasLooped = true;
+            if (!soundEvent.HasLooped)
+                soundEvent.HasLooped = true;
         }
 
         private void SelectEventNode(TreeNode eventNode, bool resetUIPlayerPos)
@@ -310,6 +311,7 @@ namespace CMI
             public string Name { get; set; }
             public TreeNode EventNode { get; set; }
             public int Volume { get; set; }
+            public bool HasLooped { get; set; }
             public string SoundPath { get; set; }
             public int Pointer1 { get; set; }
             public int Pointer2 { get; set; }
@@ -317,9 +319,9 @@ namespace CMI
             public int Type { get; set; }
             public int FadeInterval { get; set; }
             public bool Loop { get; set; }
-            public bool HasLooped { get; set; }
             public int StartSeconds { get; set; }
             public int LoopStartSeconds { get; set; }
+            // public int LoopEndSeconds { get; set; }
 
             public static SoundEvent Serialize(string name, JObject soundEventJson)
             {
@@ -333,7 +335,9 @@ namespace CMI
                     Startbit = Convert.ToInt32(soundEventJson.GetValue("Startbit").ToString(), 16),
                     Type = Convert.ToInt32(soundEventJson.GetValue("Type").ToString()),
                     FadeInterval = Convert.ToInt32(soundEventJson.GetValue("FadeInterval").ToString()),
-                    Loop = bool.Parse(soundEventJson.GetValue("Loop").ToString())
+                    Loop = bool.Parse(soundEventJson.GetValue("Loop").ToString()),
+                    StartSeconds = Convert.ToInt32(soundEventJson.GetValue("StartSeconds").ToString()),
+                    LoopStartSeconds = Convert.ToInt32(soundEventJson.GetValue("LoopStartSeconds").ToString())
                 };
                 soundEvent.MediaPlayer = soundEvent.GetMediaPlayer();
                 return soundEvent;
@@ -359,14 +363,10 @@ namespace CMI
                 return soundEvents.IndexOf(overrideSoundEvent) >= soundEvents.IndexOf(this);
             }
 
-            // TODO: WIP
-
             public bool ShouldStopEvent(TreeView soundEventsListBox)
             {
                 return IsLoadingScreenActive() || !Activated && soundEventsListBox.SelectedNode == EventNode && MediaPlayer.CurrentSong == SoundPath;
             }
-
-            // TODO: WIP
 
             public bool ShouldPlayEvent()
             {
@@ -387,7 +387,9 @@ namespace CMI
                 MediaPlayer.CurrentSong = SoundPath;
 
                 // TODO: WIP
+                // TODO: We also need to correctly set the UI player position...
                 MediaPlayer.Position = HasLooped ? LoopStartSeconds : StartSeconds;
+
                 MediaPlayer.OnPlayerMediaEnd += e => MediaPlayerOnEndHandler(this);
             }
 

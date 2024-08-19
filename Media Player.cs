@@ -219,17 +219,14 @@ namespace ECN.MediaPlayer
             {
                 if (PlayerState == PlayerStates.Playing || PlayerState == PlayerStates.Paused)
                 {
-                    if (!InFade && !InCrossfade)
+                    switch (PlayingPlayer)
                     {
-                        switch (PlayingPlayer)
-                        {
-                            case Players.Player1:
-                                Player1.currentPosition = value;
-                                break;
-                            case Players.Player2:
-                                Player2.currentPosition = value;
-                                break;
-                        }
+                        case Players.Player1:
+                            Player1.currentPosition = value;
+                            break;
+                        case Players.Player2:
+                            Player2.currentPosition = value;
+                            break;
                     }
                 }
             }
