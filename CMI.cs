@@ -227,9 +227,7 @@ namespace CMI
         {
             if (!soundEvent.Loop) return;
             soundEvent.MediaPlayer.CurrentSong = null;
-            // TODO: WIP
-            if (!soundEvent.HasLooped)
-                soundEvent.HasLooped = true;
+            if (!soundEvent.HasLooped) soundEvent.HasLooped = true;
         }
 
         private void SelectEventNode(TreeNode eventNode, bool resetUIPlayerPos)
@@ -383,6 +381,7 @@ namespace CMI
             {
                 MediaPlayer.FadeTime = FadeInterval;
                 MediaPlayer.CrossfadeTime = FadeInterval;
+                MediaPlayer.Stop(false);
                 MediaPlayer.Play(SoundPath, FadeInterval > 0);
                 MediaPlayer.CurrentSong = SoundPath;
 

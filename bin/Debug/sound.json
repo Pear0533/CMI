@@ -8,7 +8,7 @@
     "FadeInterval": 10,
     "Loop": true,
     "StartSeconds": 20,
-    "LoopStartSeconds": 60
+    "LoopStartSeconds": 40
   },
   "MatriarchChange": {
     "SoundPath": "MatriarchBetween.mp3",
