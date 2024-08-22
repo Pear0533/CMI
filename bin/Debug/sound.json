@@ -5,10 +5,10 @@
     "Pointer2": "0x16293E",
     "Startbit": 2,
     "Type": 4,
-    "FadeInterval": 10,
+    "FadeInterval": 0,
     "Loop": true,
-    "StartSeconds": 20,
-    "LoopStartSeconds": 40
+    "StartSeconds": 115,
+    "LoopStartSeconds": 2
   },
   "MatriarchChange": {
     "SoundPath": "MatriarchBetween.mp3",

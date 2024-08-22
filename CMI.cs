@@ -6,11 +6,13 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
 using ECN.MediaPlayer;
 using memory;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Timer = System.Timers.Timer;
 
 namespace CMI
 {
@@ -37,6 +39,7 @@ namespace CMI
         private static readonly MediaPlayer musicMediaPlayer = new MediaPlayer(0, true, 0);
         private static readonly MediaPlayer soundEffectsMediaPlayer = new MediaPlayer(0, true, 0);
         private static readonly MediaPlayer voiceMediaPlayer = new MediaPlayer(0, true, 0);
+        private static readonly Timer loopTimer = new Timer();
 
         public CMI()
         {
@@ -223,13 +226,6 @@ namespace CMI
             uiSoundPlayer.Ctlcontrols.play();
         }
 
-        private static void MediaPlayerOnEndHandler(SoundEvent soundEvent)
-        {
-            if (!soundEvent.Loop) return;
-            soundEvent.MediaPlayer.CurrentSong = null;
-            if (!soundEvent.HasLooped) soundEvent.HasLooped = true;
-        }
-
         private void SelectEventNode(TreeNode eventNode, bool resetUIPlayerPos)
         {
             if (resetUIPlayerPos) shouldResetUIPlayerPosition = true;
@@ -309,7 +305,6 @@ namespace CMI
             public string Name { get; set; }
             public TreeNode EventNode { get; set; }
             public int Volume { get; set; }
-            public bool HasLooped { get; set; }
             public string SoundPath { get; set; }
             public int Pointer1 { get; set; }
             public int Pointer2 { get; set; }
@@ -379,17 +374,25 @@ namespace CMI
 
             public void PlayEvent()
             {
+                if (Loop)
+                {
+                    // TODO: We might need to adjust this to work for all end user systems...
+                    loopTimer.Interval = 100;
+                    loopTimer.Elapsed += OnTimedEvent;
+                    loopTimer.Start();
+                }
                 MediaPlayer.FadeTime = FadeInterval;
                 MediaPlayer.CrossfadeTime = FadeInterval;
-                MediaPlayer.Stop(false);
                 MediaPlayer.Play(SoundPath, FadeInterval > 0);
                 MediaPlayer.CurrentSong = SoundPath;
-
-                // TODO: WIP
                 // TODO: We also need to correctly set the UI player position...
-                MediaPlayer.Position = HasLooped ? LoopStartSeconds : StartSeconds;
+                MediaPlayer.Position = StartSeconds;
+            }
 
-                MediaPlayer.OnPlayerMediaEnd += e => MediaPlayerOnEndHandler(this);
+            private void OnTimedEvent(object source, ElapsedEventArgs e)
+            {
+                if (MediaPlayer.Position == MediaPlayer.Duration)
+                    MediaPlayer.Position = LoopStartSeconds;
             }
 
             private MediaPlayer GetMediaPlayer()
