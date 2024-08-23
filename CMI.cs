@@ -39,7 +39,6 @@ namespace CMI
         private static readonly MediaPlayer musicMediaPlayer = new MediaPlayer(0, true, 0);
         private static readonly MediaPlayer soundEffectsMediaPlayer = new MediaPlayer(0, true, 0);
         private static readonly MediaPlayer voiceMediaPlayer = new MediaPlayer(0, true, 0);
-        private static readonly Timer loopTimer = new Timer();
 
         public CMI()
         {
@@ -256,7 +255,11 @@ namespace CMI
                     soundEvent.StopEvent();
                     SelectCurrentlyActivatedEventNode();
                 }
-                if (!soundEvent.ShouldPlayEvent()) continue;
+                if (!soundEvent.ShouldPlayEvent())
+                {
+                    soundEvent.LoopTimer.Stop();
+                    continue;
+                }
                 soundEvent.PlayEvent();
                 SelectEventNode(soundEvent.EventNode, true);
             }
@@ -314,7 +317,7 @@ namespace CMI
             public bool Loop { get; set; }
             public int StartSeconds { get; set; }
             public int LoopStartSeconds { get; set; }
-            // public int LoopEndSeconds { get; set; }
+            public readonly Timer LoopTimer = new Timer();
 
             public static SoundEvent Serialize(string name, JObject soundEventJson)
             {
@@ -377,9 +380,10 @@ namespace CMI
                 if (Loop)
                 {
                     // TODO: We might need to adjust this to work for all end user systems...
-                    loopTimer.Interval = 100;
-                    loopTimer.Elapsed += OnTimedEvent;
-                    loopTimer.Start();
+                    LoopTimer.Interval = 1;
+                    LoopTimer.Elapsed -= OnTimedEvent;
+                    LoopTimer.Elapsed += OnTimedEvent;
+                    LoopTimer.Start();
                 }
                 MediaPlayer.FadeTime = FadeInterval;
                 MediaPlayer.CrossfadeTime = FadeInterval;
@@ -391,7 +395,8 @@ namespace CMI
 
             private void OnTimedEvent(object source, ElapsedEventArgs e)
             {
-                if (MediaPlayer.Position == MediaPlayer.Duration)
+                if (MediaPlayer.Position <= 0) return;
+                if (MediaPlayer.Position == MediaPlayer.Duration - 1)
                     MediaPlayer.Position = LoopStartSeconds;
             }
 

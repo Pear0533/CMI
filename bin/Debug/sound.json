@@ -1,17 +1,17 @@
 {
   "MatriarchStart": {
-    "SoundPath": "Matriarch1.mp3",
+    "SoundPath": "Matriarch1.wav",
     "Pointer1": "0x28",
     "Pointer2": "0x16293E",
     "Startbit": 2,
     "Type": 4,
     "FadeInterval": 0,
     "Loop": true,
-    "StartSeconds": 115,
+    "StartSeconds": 0,
     "LoopStartSeconds": 2
   },
   "MatriarchChange": {
-    "SoundPath": "MatriarchBetween.mp3",
+    "SoundPath": "MatriarchBetween.wav",
     "Pointer1": "0x28",
     "Pointer2": "0x16293E",
     "Startbit": 4,
@@ -22,7 +22,7 @@
     "LoopStartSeconds": 0
   },
   "MatriarchP2": {
-    "SoundPath": "Matriarch2.mp3",
+    "SoundPath": "Matriarch2.wav",
     "Pointer1": "0x28",
     "Pointer2": "0x16293E",
     "Startbit": 5,
@@ -33,7 +33,7 @@
     "LoopStartSeconds": 0
   },
   "MatriarchDeath": {
-    "SoundPath": "MatriarchEnd.mp3",
+    "SoundPath": "MatriarchEnd.wav",
     "Pointer1": "0x28",
     "Pointer2": "0x16293E",
     "Startbit": 3,
@@ -137,10 +137,10 @@
     "Pointer2": "0x154D86",
     "Startbit": 7,
     "Type": 4,
-    "FadeInterval": 1,
+    "FadeInterval": 0,
     "Loop": true,
     "StartSeconds": 0,
-    "LoopStartSeconds": 0
+    "LoopStartSeconds": 2
   },
   "ScionP2": {
     "SoundPath": "Scion2.wav",
@@ -159,7 +159,7 @@
     "Pointer2": "0x154C8B",
     "Startbit": 5,
     "Type": 4,
-    "FadeInterval": 1,
+    "FadeInterval": 0,
     "Loop": false,
     "StartSeconds": 0,
     "LoopStartSeconds": 0
