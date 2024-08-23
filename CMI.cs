@@ -255,11 +255,7 @@ namespace CMI
                     soundEvent.StopEvent();
                     SelectCurrentlyActivatedEventNode();
                 }
-                if (!soundEvent.ShouldPlayEvent())
-                {
-                    soundEvent.LoopTimer.Stop();
-                    continue;
-                }
+                if (!soundEvent.ShouldPlayEvent()) continue;
                 soundEvent.PlayEvent();
                 SelectEventNode(soundEvent.EventNode, true);
             }
@@ -395,8 +391,8 @@ namespace CMI
 
             private void OnTimedEvent(object source, ElapsedEventArgs e)
             {
-                if (MediaPlayer.Position <= 0) return;
-                if (MediaPlayer.Position == MediaPlayer.Duration - 1)
+                if (MediaPlayer.CurrentSong != SoundPath || MediaPlayer.Position <= 0) return;
+                if (MediaPlayer.Position == MediaPlayer.Duration)
                     MediaPlayer.Position = LoopStartSeconds;
             }
 
