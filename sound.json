@@ -29,8 +29,8 @@
     "Type": 4,
     "FadeInterval": 0,
     "Loop": true,
-    "StartSeconds": 115,
-    "LoopStartSeconds": 115
+    "StartSeconds": 0,
+    "LoopStartSeconds": 0
   },
   "MatriarchDeath": {
     "SoundPath": "MatriarchEnd.wav",
