@@ -392,7 +392,7 @@ namespace CMI
             private void OnTimedEvent(object source, ElapsedEventArgs e)
             {
                 if (MediaPlayer.CurrentSong != SoundPath || MediaPlayer.Position <= 0) return;
-                if (MediaPlayer.Position == MediaPlayer.Duration)
+                if (MediaPlayer.Position == MediaPlayer.Duration - 1)
                     MediaPlayer.Position = LoopStartSeconds;
             }
 
