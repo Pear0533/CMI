@@ -179,7 +179,7 @@ namespace ECN.MediaPlayer
         ///     Can only be set when player is playing or paused.
         ///     Cannot be set if player is performing fade or crossfade.
         /// </summary>
-        public int Position
+        public double Position
         {
             get
             {
@@ -189,12 +189,12 @@ namespace ECN.MediaPlayer
                     {
                         case Players.Player1:
                         {
-                            return (int)Player1.currentPosition;
+                            return Player1.currentPosition;
                         }
                             break;
                         case Players.Player2:
                         {
-                            return (int)Player2.currentPosition;
+                            return Player2.currentPosition;
                         }
                             break;
                     }
@@ -202,12 +202,12 @@ namespace ECN.MediaPlayer
                     {
                         case Players.Player1:
                         {
-                            return (int)Player1.currentPosition;
+                            return Player1.currentPosition;
                         }
                             break;
                         case Players.Player2:
                         {
-                            return (int)Player2.currentPosition;
+                            return Player2.currentPosition;
                         }
                             break;
                     }
@@ -234,7 +234,7 @@ namespace ECN.MediaPlayer
         /// <summary>
         ///     The duration of the current song in seconds.
         /// </summary>
-        public int Duration
+        public double Duration
         {
             get
             {
@@ -244,12 +244,12 @@ namespace ECN.MediaPlayer
                     {
                         case Players.Player1:
                         {
-                            return (int)Player1.currentMedia.duration;
+                            return Player1.currentMedia.duration;
                         }
                             break;
                         case Players.Player2:
                         {
-                            return (int)Player2.currentMedia.duration;
+                            return Player2.currentMedia.duration;
                         }
                             break;
                     }
@@ -257,12 +257,12 @@ namespace ECN.MediaPlayer
                     {
                         case Players.Player1:
                         {
-                            return (int)Player1.currentMedia.duration;
+                            return Player1.currentMedia.duration;
                         }
                             break;
                         case Players.Player2:
                         {
-                            return (int)Player2.currentMedia.duration;
+                            return Player2.currentMedia.duration;
                         }
                             break;
                     }
