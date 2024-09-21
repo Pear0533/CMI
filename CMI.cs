@@ -20,6 +20,7 @@ namespace CMI
     {
         private const string eventFlagManQuery = "48 8B 3D ?? ?? ?? ?? 48 85 FF ?? ?? 32 C0 E9";
         private const string gameDataManQuery = "48 8B 05 ?? ?? ?? ?? 48 85 C0 74 05 48 8B 40 58 C3 C3";
+        private const string worldChrManQuery = "48 8B 05 ?? ?? ?? ?? 48 85 C0 74 0F 48 39 88";
         // TODO: WIP
         private const string menuManQuery = "";
         public static string appRootPath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}";
@@ -29,10 +30,12 @@ namespace CMI
         private static Process mainEldenRingProcess;
         private static IntPtr eldenRingProcessHandle;
         private static IntPtr eventFlagMan;
+        private static IntPtr worldChrMan;
         private static long gameDataMan;
         private static long menuMan;
         private static Scanner eventFlagManScanner;
         private static Scanner gameDataManScanner;
+        private static Scanner worldChrManScanner;
         private static int masterVolume;
         private static bool shouldResetUIPlayerPosition;
         private static readonly List<SoundEvent> soundEvents = new List<SoundEvent>();
@@ -54,7 +57,7 @@ namespace CMI
 
         private static byte[] ReadValue(IntPtr address, int length)
         {
-            var result = new byte[length];
+            byte[] result = new byte[length];
             ReadProcessMemory(eldenRingProcessHandle, address, result, length, out IntPtr _);
             return result;
         }
@@ -77,6 +80,11 @@ namespace CMI
         private static int ReadVolume(long baseAddress, int offset)
         {
             return ReadByte((IntPtr)ReadLong((IntPtr)baseAddress + 0x58) + offset) * 10;
+        }
+
+        private static int ReadHP()
+        {
+            return ReadInt((IntPtr)ReadLong((IntPtr)ReadLong((IntPtr)ReadLong(worldChrMan) + 0x10EF8) + 0x190) + 0x138);
         }
 
         /*
@@ -107,7 +115,7 @@ namespace CMI
 
         private static Scanner ConfigureMemoryScanner(string searchQuery)
         {
-            var memoryScanner = new Scanner(mainEldenRingProcess, eldenRingProcessHandle, searchQuery);
+            Scanner memoryScanner = new Scanner(mainEldenRingProcess, eldenRingProcessHandle, searchQuery);
             memoryScanner.setModule(mainEldenRingProcess.MainModule);
             return memoryScanner;
         }
@@ -116,11 +124,12 @@ namespace CMI
         {
             eventFlagManScanner = ConfigureMemoryScanner(eventFlagManQuery);
             gameDataManScanner = ConfigureMemoryScanner(gameDataManQuery);
+            worldChrManScanner = ConfigureMemoryScanner(worldChrManQuery);
         }
 
         private static IntPtr GetQueryResultAsPointer(Memory scanner)
         {
-            var pointer = (IntPtr)scanner.FindPattern();
+            IntPtr pointer = (IntPtr)scanner.FindPattern();
             pointer += ReadInt(pointer + 3) + 7;
             return pointer;
         }
@@ -135,10 +144,18 @@ namespace CMI
             gameDataMan = ReadLong(GetQueryResultAsPointer(gameDataManScanner));
         }
 
+        private static void SetWorldChrMan()
+        {
+            worldChrMan = GetQueryResultAsPointer(worldChrManScanner);
+            int hp = ReadHP();
+            Console.WriteLine(hp);
+        }
+
         private static void PostAttachToGameSetup()
         {
             ConfigureMemoryScanners();
             SetEventFlagMan();
+            SetWorldChrMan();
         }
 
         private async Task AttachToGame()
@@ -185,7 +202,7 @@ namespace CMI
             {
                 foreach (PropertyInfo prop in typeof(SoundEvent).GetProperties().Skip(6))
                 {
-                    var propertyNode = new TreeNode { Text = prop.Name };
+                    TreeNode propertyNode = new TreeNode { Text = prop.Name };
                     propertyNode.Nodes.Add(prop.GetValue(soundEvent).ToString());
                     soundEvent.EventNode.Nodes.Add(propertyNode);
                 }
@@ -299,6 +316,7 @@ namespace CMI
 
         public class SoundEvent
         {
+            public readonly Timer LoopTimer = new Timer();
             public bool Activated { get; set; }
             public MediaPlayer MediaPlayer { get; set; }
             public string Name { get; set; }
@@ -313,11 +331,10 @@ namespace CMI
             public bool Loop { get; set; }
             public int StartSeconds { get; set; }
             public int LoopStartSeconds { get; set; }
-            public readonly Timer LoopTimer = new Timer();
 
             public static SoundEvent Serialize(string name, JObject soundEventJson)
             {
-                var soundEvent = new SoundEvent
+                SoundEvent soundEvent = new SoundEvent
                 {
                     Name = name,
                     EventNode = new TreeNode { ImageIndex = 1, SelectedImageIndex = 1, Name = name, Text = name },
