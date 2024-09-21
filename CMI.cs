@@ -82,9 +82,15 @@ namespace CMI
             return ReadByte((IntPtr)ReadLong((IntPtr)baseAddress + 0x58) + offset) * 10;
         }
 
-        private static int ReadHP()
+        private static bool IsHPInvalid()
         {
-            return ReadInt((IntPtr)ReadLong((IntPtr)ReadLong((IntPtr)ReadLong(worldChrMan) + 0x10EF8) + 0x190) + 0x138);
+            IntPtr addr = (IntPtr)(ReadLong(worldChrMan) + 0x10EF8);
+            addr = (IntPtr)ReadLong(addr);
+            addr = (IntPtr)(ReadLong(addr) + 0x190);
+            addr = (IntPtr)ReadLong(addr);
+            addr = (IntPtr)(ReadLong(addr) + 0x138);
+            // TODO: Double check
+            return addr.ToInt64() == 312;
         }
 
         /*
@@ -94,10 +100,12 @@ namespace CMI
         }
         */
 
+        /*
         private static bool ReadIsLoadingScreenActive(IntPtr baseAddress, int offset)
         {
             return ReadByte((IntPtr)ReadLong(baseAddress + 0x3D6B7D0) + offset) != 0;
         }
+        */
 
         private void SendStatusLogMessage(string message)
         {
@@ -147,8 +155,6 @@ namespace CMI
         private static void SetWorldChrMan()
         {
             worldChrMan = GetQueryResultAsPointer(worldChrManScanner);
-            int hp = ReadHP();
-            Console.WriteLine(hp);
         }
 
         private static void PostAttachToGameSetup()
@@ -308,11 +314,13 @@ namespace CMI
             if (e.Node.Parent == null) UpdateUISoundPlayerState(soundEvents[e.Node.Index]);
         }
 
+        /*
         private static bool IsLoadingScreenActive()
         {
             ProcessModule mainModule = mainEldenRingProcess.MainModule;
             return mainModule != null && ReadIsLoadingScreenActive(mainModule.BaseAddress, 0x728);
         }
+        */
 
         public class SoundEvent
         {
@@ -374,12 +382,12 @@ namespace CMI
 
             public bool ShouldStopEvent(TreeView soundEventsListBox)
             {
-                return IsLoadingScreenActive() || !Activated && soundEventsListBox.SelectedNode == EventNode && MediaPlayer.CurrentSong == SoundPath;
+                return IsHPInvalid() || !Activated && soundEventsListBox.SelectedNode == EventNode && MediaPlayer.CurrentSong == SoundPath;
             }
 
             public bool ShouldPlayEvent()
             {
-                return !IsLoadingScreenActive() && Activated && !DoesOtherEventOverride() && MediaPlayer.CurrentSong != SoundPath;
+                return !IsHPInvalid() && Activated && !DoesOtherEventOverride() && MediaPlayer.CurrentSong != SoundPath;
             }
 
             public void StopEvent()
