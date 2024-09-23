@@ -42,7 +42,6 @@ namespace CMI
         private static readonly MediaPlayer musicMediaPlayer = new MediaPlayer(0, true, 0);
         private static readonly MediaPlayer soundEffectsMediaPlayer = new MediaPlayer(0, true, 0);
         private static readonly MediaPlayer voiceMediaPlayer = new MediaPlayer(0, true, 0);
-        private const bool isUsingTestMode = true;
 
         public CMI()
         {
@@ -309,6 +308,7 @@ namespace CMI
 
         private async void CMI_Shown(object sender, EventArgs e)
         {
+            Hide();
             if (!ReadSoundJSON()) return;
             LoadSoundEvents();
             await AttachToGame();
@@ -453,18 +453,8 @@ namespace CMI
         {
             try
             {
-                if (isUsingTestMode)
-                {
-                    modSoundFolderPath = "C:\\Users\\Isaac Fisher\\Downloads\\ConvergenceER\\Convergence\\sound";
-                    soundJsonName = "CMI.sound.json";
-                }
-                /*
-                else
-                {
-                    CMI.modSoundFolderPath = $"{args[0]}\\sound";
-                    CMI.soundJsonFilePath = $"{CMI.modSoundFolderPath}\\sound.json";
-                }
-                */
+                modSoundFolderPath = $"{appRootPath}\\sound";
+                soundJsonName = "CMI.sound.json";
             }
             catch
             {

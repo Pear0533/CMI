@@ -151,6 +151,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"$(ProjectDir)tools\ILMerge\tools\net452\ILMerge.exe" /out:"$(TargetDir)CMI_out.dll" "$(TargetDir)CMI.dll" "$(TargetDir)AxInterop.WMPLib.dll" "$(TargetDir)Interop.WMPLib.dll" "$(TargetDir)memory.dll" "$(TargetDir)Newtonsoft.Json.Bson.dll" "$(TargetDir)Newtonsoft.Json.dll"</PostBuildEvent>
+    <PostBuildEvent>if not exist "$(TargetDir)output" (
+    mkdir "$(TargetDir)output"
+)
+"$(ProjectDir)tools\ILMerge\tools\net452\ILMerge.exe" /out:"$(TargetDir)output\CMI.dll" "$(TargetDir)CMI.dll" "$(TargetDir)AxInterop.WMPLib.dll" "$(TargetDir)Interop.WMPLib.dll" "$(TargetDir)memory.dll" "$(TargetDir)Newtonsoft.Json.Bson.dll" "$(TargetDir)Newtonsoft.Json.dll"</PostBuildEvent>
   </PropertyGroup>
 </Project>
