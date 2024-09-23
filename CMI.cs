@@ -25,7 +25,7 @@ namespace CMI
         private const string menuManQuery = "";
         public static string appRootPath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}";
         public static string modSoundFolderPath;
-        public static string soundJsonFilePath;
+        public static string soundJsonName;
         private static JObject soundJson;
         private static Process mainEldenRingProcess;
         private static IntPtr eldenRingProcessHandle;
@@ -42,6 +42,7 @@ namespace CMI
         private static readonly MediaPlayer musicMediaPlayer = new MediaPlayer(0, true, 0);
         private static readonly MediaPlayer soundEffectsMediaPlayer = new MediaPlayer(0, true, 0);
         private static readonly MediaPlayer voiceMediaPlayer = new MediaPlayer(0, true, 0);
+        private const bool isUsingTestMode = true;
 
         public CMI()
         {
@@ -189,13 +190,17 @@ namespace CMI
         {
             try
             {
-                SendStatusLogMessage($"Reading sound configuration file: \"{soundJsonFilePath}\"");
-                soundJson = JsonConvert.DeserializeObject<JObject>(File.ReadAllText(soundJsonFilePath));
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                Stream stream = assembly.GetManifestResourceStream(soundJsonName);
+                StreamReader reader = new StreamReader(stream ?? throw new Exception());
+                string jsonContent = reader.ReadToEnd();
+                SendStatusLogMessage($"Reading sound configuration: \"{soundJsonName}\"");
+                soundJson = JsonConvert.DeserializeObject<JObject>(jsonContent);
                 return true;
             }
             catch
             {
-                SendStatusLogMessage("Failed to read sound configuration file, cannot attach to game");
+                SendStatusLogMessage("Failed to read sound configuration, cannot attach to game");
                 return false;
             }
         }
@@ -442,6 +447,32 @@ namespace CMI
                 }
                 return mediaPlayer;
             }
+        }
+
+        public static void ShowForm()
+        {
+            try
+            {
+                if (isUsingTestMode)
+                {
+                    modSoundFolderPath = "C:\\Users\\Isaac Fisher\\Downloads\\ConvergenceER\\Convergence\\sound";
+                    soundJsonName = "CMI.sound.json";
+                }
+                /*
+                else
+                {
+                    CMI.modSoundFolderPath = $"{args[0]}\\sound";
+                    CMI.soundJsonFilePath = $"{CMI.modSoundFolderPath}\\sound.json";
+                }
+                */
+            }
+            catch
+            {
+                Environment.Exit(0);
+            }
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new CMI());
         }
     }
 }

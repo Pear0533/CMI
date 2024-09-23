@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<coreProperties xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.openxmlformats.org/package/2006/metadata/core-properties">
+  <dc:creator>mbarnett</dc:creator>
+  <dc:description>ILMerge is a utility that can be used to merge multiple .NET assemblies into a single assembly. ILMerge takes a set of input assemblies and merges them into one target assembly. The first assembly in the list of input assemblies is the primary assembly. When the primary assembly is an executable, then the target assembly is created as an executable with the same entry point as the primary assembly. Also, if the primary assembly has a strong name, and a .snk file is provided, then the target assembly is re-signed with the specified key so that it also has a strong name.
+
+ILMerge is packaged as a console application. But all of its functionality is also available programmatically.
+
+There are several options that control the behavior of ILMerge. See the documentation that comes with the tool for details.</dc:description>
+  <dc:identifier>ILMerge</dc:identifier>
+  <version>3.0.41</version>
+  <keywords></keywords>
+  <lastModifiedBy>NuGet, Version=4.3.0.6, Culture=neutral, PublicKeyToken=31bf3856ad364e35;Microsoft Windows NT 6.2.9200.0;.NET Framework 4.5</lastModifiedBy>
+</coreProperties>

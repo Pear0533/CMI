@@ -21,12 +21,12 @@ namespace CMI
                 if (isUsingTestMode)
                 {
                     CMI.modSoundFolderPath = "C:\\Users\\Isaac Fisher\\Downloads\\ConvergenceER\\Convergence\\sound";
-                    CMI.soundJsonFilePath = $"{CMI.appRootPath}\\sound.json";
+                    CMI.soundJsonName = $"{CMI.appRootPath}\\sound.json";
                 }
                 else
                 {
                     CMI.modSoundFolderPath = $"{args[0]}\\sound";
-                    CMI.soundJsonFilePath = $"{CMI.modSoundFolderPath}\\sound.json";
+                    CMI.soundJsonName = $"{CMI.modSoundFolderPath}\\sound.json";
                 }
             }
             catch
