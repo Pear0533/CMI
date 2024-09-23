@@ -85,7 +85,6 @@
       <DependentUpon>CMI.cs</DependentUpon>
     </Compile>
     <Compile Include="Media Player.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="CMI.resx">
       <DependentUpon>CMI.cs</DependentUpon>

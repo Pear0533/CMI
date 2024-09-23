@@ -449,7 +449,7 @@ namespace CMI
             }
         }
 
-        public static void ShowForm()
+        public static void Main()
         {
             try
             {
