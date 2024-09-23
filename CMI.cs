@@ -308,7 +308,7 @@ namespace CMI
 
         private async void CMI_Shown(object sender, EventArgs e)
         {
-            Hide();
+            // Hide();
             if (!ReadSoundJSON()) return;
             LoadSoundEvents();
             await AttachToGame();
