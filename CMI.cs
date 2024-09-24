@@ -308,7 +308,9 @@ namespace CMI
 
         private async void CMI_Shown(object sender, EventArgs e)
         {
-            // Hide();
+#if HIDE_WINDOW
+    Hide();
+#endif
             if (!ReadSoundJSON()) return;
             LoadSoundEvents();
             await AttachToGame();
@@ -317,6 +319,22 @@ namespace CMI
         private void SoundEventsListBox_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Node.Parent == null) UpdateUISoundPlayerState(soundEvents[e.Node.Index]);
+        }
+
+        public static void Main()
+        {
+            try
+            {
+                modSoundFolderPath = $"{appRootPath}\\sound";
+                soundJsonName = "CMI.sound.json";
+            }
+            catch
+            {
+                Environment.Exit(0);
+            }
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new CMI());
         }
 
         /*
@@ -447,22 +465,6 @@ namespace CMI
                 }
                 return mediaPlayer;
             }
-        }
-
-        public static void Main()
-        {
-            try
-            {
-                modSoundFolderPath = $"{appRootPath}\\sound";
-                soundJsonName = "CMI.sound.json";
-            }
-            catch
-            {
-                Environment.Exit(0);
-            }
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CMI());
         }
     }
 }

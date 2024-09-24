@@ -1,6 +1,7 @@
 @echo off
 SET SolutionDir="../"
 SET ProjectName="CMI"
+SET HideWindow="false"
 
 REM Attempt to find MSBuild for Visual Studio 2022 Community edition
 SET MSBuildPath="C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\"
@@ -19,8 +20,15 @@ cd /d %SolutionDir% || (
     exit /b 1
 )
 
+REM Set the DefineConstants based on the HideWindow value
+IF %HideWindow%=="true" (
+    SET DefineConstants="HIDE_WINDOW"
+) ELSE (
+    SET DefineConstants=""
+)
+
 REM Rebuild the project
-%MSBuildPath%MSBuild.exe %SolutionDir%\%ProjectName%.sln /t:Rebuild /p:Configuration=Release
+%MSBuildPath%MSBuild.exe %SolutionDir%\%ProjectName%.sln /t:Rebuild /p:Configuration=Release /p:DefineConstants=%DefineConstants%
 IF ERRORLEVEL 1 (
     echo Build failed. Check the output for details.
     pause
