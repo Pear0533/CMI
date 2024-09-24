@@ -1,5 +1,5 @@
 @echo off
-SET SolutionDir="./"
+SET SolutionDir="../"
 SET ProjectName="CMI"
 
 REM Attempt to find MSBuild for Visual Studio 2022 Community edition
