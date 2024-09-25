@@ -4,7 +4,6 @@ C:\Users\Isaac Fisher\Downloads\CMI\bin\Release\CMI.dll
 C:\Users\Isaac Fisher\Downloads\CMI\bin\Release\memory.dll
 C:\Users\Isaac Fisher\Downloads\CMI\bin\Release\Newtonsoft.Json.Bson.dll
 C:\Users\Isaac Fisher\Downloads\CMI\bin\Release\Newtonsoft.Json.dll
-C:\Users\Isaac Fisher\Downloads\CMI\bin\Release\Newtonsoft.Json.pdb
 C:\Users\Isaac Fisher\Downloads\CMI\bin\Release\Newtonsoft.Json.xml
 C:\Users\Isaac Fisher\Downloads\CMI\bin\Release\Newtonsoft.Json.Bson.pdb
 C:\Users\Isaac Fisher\Downloads\CMI\bin\Release\Newtonsoft.Json.Bson.xml

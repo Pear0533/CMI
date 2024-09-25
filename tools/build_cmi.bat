@@ -1,7 +1,7 @@
 @echo off
 SET SolutionDir="../"
 SET ProjectName="CMI"
-SET HideWindow="false"
+SET HideWindow="true"
 
 REM Attempt to find MSBuild for Visual Studio 2022 Community edition
 SET MSBuildPath="C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\"
