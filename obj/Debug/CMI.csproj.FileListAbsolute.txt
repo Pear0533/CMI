@@ -146,3 +146,26 @@ C:\Users\Isaac Fisher\Downloads\CMI\bin\Debug\CMI.dll.config
 C:\Users\Isaac Fisher\Downloads\CMI\bin\Debug\CMI.dll
 C:\Users\Isaac Fisher\Downloads\CMI\bin\Debug\memory.dll
 C:\Users\Isaac Fisher\Downloads\CMI\obj\Debug\CMI.dll
+D:\CMI\bin\Debug\sound.json
+D:\CMI\bin\Debug\CMI.dll.config
+D:\CMI\bin\Debug\CMI.dll
+D:\CMI\bin\Debug\CMI.pdb
+D:\CMI\bin\Debug\memory.dll
+D:\CMI\bin\Debug\Newtonsoft.Json.Bson.dll
+D:\CMI\bin\Debug\Newtonsoft.Json.dll
+D:\CMI\bin\Debug\Newtonsoft.Json.xml
+D:\CMI\bin\Debug\Newtonsoft.Json.Bson.pdb
+D:\CMI\bin\Debug\Newtonsoft.Json.Bson.xml
+D:\CMI\bin\Debug\Interop.WMPLib.dll
+D:\CMI\bin\Debug\AxInterop.WMPLib.dll
+D:\CMI\obj\Debug\CMI.csproj.AssemblyReference.cache
+D:\CMI\obj\Debug\Interop.WMPLib.dll
+D:\CMI\obj\Debug\AxInterop.WMPLib.dll
+D:\CMI\obj\Debug\CMI.csproj.ResolveComReference.cache
+D:\CMI\obj\Debug\CMI.CMI.resources
+D:\CMI\obj\Debug\CMI.Properties.Resources.resources
+D:\CMI\obj\Debug\CMI.csproj.GenerateResource.cache
+D:\CMI\obj\Debug\CMI.csproj.CoreCompileInputs.cache
+D:\CMI\obj\Debug\CMI.csproj.CopyComplete
+D:\CMI\obj\Debug\CMI.dll
+D:\CMI\obj\Debug\CMI.pdb

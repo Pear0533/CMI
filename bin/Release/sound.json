@@ -8,7 +8,9 @@
     "FadeInterval": 0,
     "Loop": true,
     "StartSeconds": 0,
-    "LoopStartSeconds": 2
+    "LoopStartSeconds": 2,
+    "PlayOnce": false,
+    "HasPlayed": false
   },
   "MatriarchChange": {
     "SoundPath": "MatriarchBetween.wav",
@@ -19,7 +21,9 @@
     "FadeInterval": 1,
     "Loop": false,
     "StartSeconds": 0,
-    "LoopStartSeconds": 0
+    "LoopStartSeconds": 0,
+    "PlayOnce": false,
+    "HasPlayed": false
   },
   "MatriarchP2": {
     "SoundPath": "Matriarch2.wav",
@@ -30,7 +34,9 @@
     "FadeInterval": 0,
     "Loop": true,
     "StartSeconds": 0,
-    "LoopStartSeconds": 0
+    "LoopStartSeconds": 0,
+    "PlayOnce": false,
+    "HasPlayed": false
   },
   "MatriarchDeath": {
     "SoundPath": "MatriarchEnd.wav",
@@ -41,7 +47,9 @@
     "FadeInterval": 1,
     "Loop": false,
     "StartSeconds": 0,
-    "LoopStartSeconds": 0
+    "LoopStartSeconds": 0,
+    "PlayOnce": false,
+    "HasPlayed": false
   },
   "ShabibiStart": {
     "SoundPath": "Shabibi1.mp3",
@@ -52,7 +60,9 @@
     "FadeInterval": 0,
     "Loop": true,
     "StartSeconds": 0,
-    "LoopStartSeconds": 0
+    "LoopStartSeconds": 0,
+    "PlayOnce": false,
+    "HasPlayed": false
   },
   "ShabibiChange": {
     "SoundPath": "ShabibiBetween.mp3",
@@ -63,7 +73,9 @@
     "FadeInterval": 1,
     "Loop": false,
     "StartSeconds": 0,
-    "LoopStartSeconds": 0
+    "LoopStartSeconds": 0,
+    "PlayOnce": false,
+    "HasPlayed": false
   },
   "ShabibiP2": {
     "SoundPath": "Shabibi2.mp3",
@@ -74,7 +86,9 @@
     "FadeInterval": 0,
     "Loop": true,
     "StartSeconds": 0,
-    "LoopStartSeconds": 0
+    "LoopStartSeconds": 0,
+    "PlayOnce": false,
+    "HasPlayed": false
   },
   "ShabibiDeath": {
     "SoundPath": "ShabibiEnd.mp3",
@@ -85,7 +99,9 @@
     "FadeInterval": 1,
     "Loop": false,
     "StartSeconds": 0,
-    "LoopStartSeconds": 0
+    "LoopStartSeconds": 0,
+    "PlayOnce": false,
+    "HasPlayed": false
   },
   "SigurStart": {
     "SoundPath": "Sigur1.mp3",
@@ -96,7 +112,9 @@
     "FadeInterval": 0,
     "Loop": true,
     "StartSeconds": 0,
-    "LoopStartSeconds": 0
+    "LoopStartSeconds": 0,
+    "PlayOnce": false,
+    "HasPlayed": false
   },
   "SigurDeath": {
     "SoundPath": "SigurEnd.mp3",
@@ -107,7 +125,9 @@
     "FadeInterval": 0,
     "Loop": false,
     "StartSeconds": 0,
-    "LoopStartSeconds": 0
+    "LoopStartSeconds": 0,
+    "PlayOnce": false,
+    "HasPlayed": false
   },
   "DakkStart": {
     "SoundPath": "Dakk1.mp3",
@@ -118,7 +138,9 @@
     "FadeInterval": 0,
     "Loop": true,
     "StartSeconds": 0,
-    "LoopStartSeconds": 0
+    "LoopStartSeconds": 0,
+    "PlayOnce": false,
+    "HasPlayed": false
   },
   "DakkDeath": {
     "SoundPath": "DakkEnd.mp3",
@@ -129,7 +151,9 @@
     "FadeInterval": 0,
     "Loop": false,
     "StartSeconds": 0,
-    "LoopStartSeconds": 0
+    "LoopStartSeconds": 0,
+    "PlayOnce": false,
+    "HasPlayed": false
   },
   "ScionStart": {
     "SoundPath": "Scion1.wav",
@@ -140,7 +164,9 @@
     "FadeInterval": 0,
     "Loop": true,
     "StartSeconds": 0,
-    "LoopStartSeconds": 2
+    "LoopStartSeconds": 2,
+    "PlayOnce": false,
+    "HasPlayed": false
   },
   "ScionP2": {
     "SoundPath": "Scion2.wav",
@@ -151,7 +177,9 @@
     "FadeInterval": 0,
     "Loop": true,
     "StartSeconds": 0,
-    "LoopStartSeconds": 0
+    "LoopStartSeconds": 0,
+    "PlayOnce": false,
+    "HasPlayed": false
   },
   "ScionDeath": {
     "SoundPath": "ScionEnd.wav",
@@ -162,6 +190,8 @@
     "FadeInterval": 0,
     "Loop": false,
     "StartSeconds": 0,
-    "LoopStartSeconds": 0
+    "LoopStartSeconds": 0,
+    "PlayOnce": true,
+    "HasPlayed": true
   }
 }
