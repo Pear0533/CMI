@@ -25,7 +25,7 @@ namespace CMI
         private const string menuManQuery = "";
         public static string appRootPath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}";
         public static string modSoundFolderPath;
-        public static string soundJsonName;
+        public static string soundJsonFilePath;
         private static JObject soundJson;
         private static Process mainEldenRingProcess;
         private static IntPtr eldenRingProcessHandle;
@@ -189,12 +189,8 @@ namespace CMI
         {
             try
             {
-                Assembly assembly = Assembly.GetExecutingAssembly();
-                Stream stream = assembly.GetManifestResourceStream(soundJsonName);
-                StreamReader reader = new StreamReader(stream ?? throw new Exception());
-                string jsonContent = reader.ReadToEnd();
-                SendStatusLogMessage($"Reading sound configuration: \"{soundJsonName}\"");
-                soundJson = JsonConvert.DeserializeObject<JObject>(jsonContent);
+                SendStatusLogMessage($"Reading sound configuration file: \"{soundJsonFilePath}\"");
+                soundJson = JsonConvert.DeserializeObject<JObject>(File.ReadAllText(soundJsonFilePath));
                 return true;
             }
             catch
@@ -326,7 +322,7 @@ namespace CMI
             try
             {
                 modSoundFolderPath = $"{appRootPath}\\sound";
-                soundJsonName = "CMI.sound.json";
+                soundJsonFilePath = $"{appRootPath}\\sound.json";
             }
             catch
             {
@@ -344,6 +340,33 @@ namespace CMI
             return mainModule != null && ReadIsLoadingScreenActive(mainModule.BaseAddress, 0x728);
         }
         */
+
+        // TODO: Send a message to the console when we've updated the HasPlayed property...
+        // TODO: Properly reflect the updated HasPlayed property in the event node...
+        // TODO: Change HasPlayed to false when the event becomes deactivated...
+
+        private void SaveSoundJSON(SoundEvent soundEvent)
+        {
+            try
+            {
+                if (soundJson[soundEvent.Name] == null) return;
+                soundJson[soundEvent.Name]["HasPlayed"] = soundEvent.HasPlayed;
+                File.WriteAllText(soundJsonFilePath, soundJson.ToString(Formatting.Indented));
+            }
+            catch
+            {
+                SendStatusLogMessage("Failed to save sound configuration");
+            }
+        }
+
+        // TODO: We need to unsubscribe from the event handler after we're done...
+
+        private static void MediaPlayerOnEndHandler(SoundEvent soundEvent)
+        {
+            if (!soundEvent.PlayOnce) return;
+            soundEvent.HasPlayed = true;
+            ((CMI)ActiveForm)?.SaveSoundJSON(soundEvent);
+        }
 
         public class SoundEvent
         {
@@ -441,8 +464,8 @@ namespace CMI
                 MediaPlayer.CurrentSong = SoundPath;
                 // TODO: We also need to correctly set the UI player position...
                 MediaPlayer.Position = StartSeconds;
-                // TODO: We need to overwrite this value in the sound JSON...
-                if (PlayOnce) HasPlayed = true;
+                if (PlayOnce) MediaPlayer.OnPlayerMediaEnd += e =>
+                    MediaPlayerOnEndHandler(this);
             }
 
             private void OnTimedEvent(object source, ElapsedEventArgs e)

@@ -109,9 +109,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="sound.json">
+    <None Include="sound.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -155,6 +155,7 @@
     <PostBuildEvent>set RootModFolder=ConvergenceER
 set ModFolder=Convergence
 "$(ProjectDir)tools\ILMerge\tools\net452\ILMerge.exe" /out:"$(ProjectDir)..\%25RootModFolder%25\%25ModFolder%25\CMI.dll" /ndebug "$(TargetDir)CMI.dll" "$(TargetDir)AxInterop.WMPLib.dll" "$(TargetDir)Interop.WMPLib.dll" "$(TargetDir)memory.dll" "$(TargetDir)Newtonsoft.Json.Bson.dll" "$(TargetDir)Newtonsoft.Json.dll"
+copy "$(TargetDir)sound.json" "$(ProjectDir)..\%25RootModFolder%25\%25ModFolder%25\sound.json"
 echo @echo off &gt; "$(ProjectDir)tools\run_cmi.bat"
 echo start /B powershell -WindowStyle Hidden -Command "Add-Type -Path '../../%25RootModFolder%25/%25ModFolder%25/CMI.dll'; [CMI.CMI]::Main()" &gt;&gt; "$(ProjectDir)tools\run_cmi.bat"</PostBuildEvent>
   </PropertyGroup>

@@ -100,7 +100,7 @@
     "Loop": false,
     "StartSeconds": 0,
     "LoopStartSeconds": 0,
-    "PlayOnce": false,
+    "PlayOnce": true,
     "HasPlayed": false
   },
   "SigurStart": {
@@ -126,7 +126,7 @@
     "Loop": false,
     "StartSeconds": 0,
     "LoopStartSeconds": 0,
-    "PlayOnce": false,
+    "PlayOnce": true,
     "HasPlayed": false
   },
   "DakkStart": {
@@ -152,7 +152,7 @@
     "Loop": false,
     "StartSeconds": 0,
     "LoopStartSeconds": 0,
-    "PlayOnce": false,
+    "PlayOnce": true,
     "HasPlayed": false
   },
   "ScionStart": {
@@ -192,6 +192,6 @@
     "StartSeconds": 0,
     "LoopStartSeconds": 0,
     "PlayOnce": true,
-    "HasPlayed": true
+    "HasPlayed": false
   }
 }
