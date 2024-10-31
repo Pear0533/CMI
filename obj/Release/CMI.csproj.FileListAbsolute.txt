@@ -45,26 +45,3 @@ C:\Users\Isaac Fisher\Downloads\CMI Tutorial\CMI\obj\Release\CMI.csproj.CoreComp
 C:\Users\Isaac Fisher\Downloads\CMI Tutorial\CMI\obj\Release\CMI.csproj.CopyComplete
 C:\Users\Isaac Fisher\Downloads\CMI Tutorial\CMI\obj\Release\CMI.dll
 C:\Users\Isaac Fisher\Downloads\CMI Tutorial\CMI\obj\Release\CMI.pdb
-D:\CMI\bin\Release\sound.json
-D:\CMI\bin\Release\CMI.dll.config
-D:\CMI\bin\Release\CMI.dll
-D:\CMI\bin\Release\CMI.pdb
-D:\CMI\bin\Release\memory.dll
-D:\CMI\bin\Release\Newtonsoft.Json.Bson.dll
-D:\CMI\bin\Release\Newtonsoft.Json.dll
-D:\CMI\bin\Release\Newtonsoft.Json.xml
-D:\CMI\bin\Release\Newtonsoft.Json.Bson.pdb
-D:\CMI\bin\Release\Newtonsoft.Json.Bson.xml
-D:\CMI\bin\Release\Interop.WMPLib.dll
-D:\CMI\bin\Release\AxInterop.WMPLib.dll
-D:\CMI\obj\Release\CMI.csproj.AssemblyReference.cache
-D:\CMI\obj\Release\Interop.WMPLib.dll
-D:\CMI\obj\Release\AxInterop.WMPLib.dll
-D:\CMI\obj\Release\CMI.csproj.ResolveComReference.cache
-D:\CMI\obj\Release\CMI.CMI.resources
-D:\CMI\obj\Release\CMI.Properties.Resources.resources
-D:\CMI\obj\Release\CMI.csproj.GenerateResource.cache
-D:\CMI\obj\Release\CMI.csproj.CoreCompileInputs.cache
-D:\CMI\obj\Release\CMI.csproj.CopyComplete
-D:\CMI\obj\Release\CMI.dll
-D:\CMI\obj\Release\CMI.pdb

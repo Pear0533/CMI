@@ -362,8 +362,6 @@ namespace CMI
             public bool Loop { get; set; }
             public int StartSeconds { get; set; }
             public int LoopStartSeconds { get; set; }
-            public bool PlayOnce { get; set; }
-            public bool HasPlayed { get; set; }
 
             public static SoundEvent Serialize(string name, JObject soundEventJson)
             {
@@ -379,9 +377,7 @@ namespace CMI
                     FadeInterval = Convert.ToInt32(soundEventJson.GetValue("FadeInterval").ToString()),
                     Loop = bool.Parse(soundEventJson.GetValue("Loop").ToString()),
                     StartSeconds = Convert.ToInt32(soundEventJson.GetValue("StartSeconds").ToString()),
-                    LoopStartSeconds = Convert.ToInt32(soundEventJson.GetValue("LoopStartSeconds").ToString()),
-                    PlayOnce = bool.Parse(soundEventJson.GetValue("PlayOnce").ToString()),
-                    HasPlayed = bool.Parse(soundEventJson.GetValue("HasPlayed").ToString())
+                    LoopStartSeconds = Convert.ToInt32(soundEventJson.GetValue("LoopStartSeconds").ToString())
                 };
                 soundEvent.MediaPlayer = soundEvent.GetMediaPlayer();
                 return soundEvent;
@@ -403,8 +399,7 @@ namespace CMI
 
             public bool DoesOtherEventOverride()
             {
-                // TODO: Cleanup
-                SoundEvent overrideSoundEvent = soundEvents.LastOrDefault(i => i.Name != Name && i.Activated && i.Type == Type && !(i.PlayOnce && i.HasPlayed));
+                SoundEvent overrideSoundEvent = soundEvents.LastOrDefault(i => i.Name != Name && i.Activated && i.Type == Type);
                 return soundEvents.IndexOf(overrideSoundEvent) >= soundEvents.IndexOf(this);
             }
 
@@ -415,7 +410,6 @@ namespace CMI
 
             public bool ShouldPlayEvent()
             {
-                if (PlayOnce && HasPlayed) return false;
                 return !IsHPInvalid() && Activated && !DoesOtherEventOverride() && MediaPlayer.CurrentSong != SoundPath;
             }
 
@@ -441,8 +435,6 @@ namespace CMI
                 MediaPlayer.CurrentSong = SoundPath;
                 // TODO: We also need to correctly set the UI player position...
                 MediaPlayer.Position = StartSeconds;
-                // TODO: We need to overwrite this value in the sound JSON...
-                if (PlayOnce) HasPlayed = true;
             }
 
             private void OnTimedEvent(object source, ElapsedEventArgs e)
