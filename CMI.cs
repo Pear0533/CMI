@@ -25,7 +25,7 @@ namespace CMI
         private const string menuManQuery = "";
         public static string appRootPath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}";
         public static string modSoundFolderPath;
-        public static string soundJsonName;
+        public static string soundJsonFilePath;
         private static JObject soundJson;
         private static Process mainEldenRingProcess;
         private static IntPtr eldenRingProcessHandle;
@@ -189,12 +189,8 @@ namespace CMI
         {
             try
             {
-                Assembly assembly = Assembly.GetExecutingAssembly();
-                Stream stream = assembly.GetManifestResourceStream(soundJsonName);
-                StreamReader reader = new StreamReader(stream ?? throw new Exception());
-                string jsonContent = reader.ReadToEnd();
-                SendStatusLogMessage($"Reading sound configuration: \"{soundJsonName}\"");
-                soundJson = JsonConvert.DeserializeObject<JObject>(jsonContent);
+                SendStatusLogMessage($"Reading sound configuration file: \"{soundJsonFilePath}\"");
+                soundJson = JsonConvert.DeserializeObject<JObject>(File.ReadAllText(soundJsonFilePath));
                 return true;
             }
             catch
@@ -326,7 +322,7 @@ namespace CMI
             try
             {
                 modSoundFolderPath = $"{appRootPath}\\sound";
-                soundJsonName = "CMI.sound.json";
+                soundJsonFilePath = $"{appRootPath}\\sound.json";
             }
             catch
             {
