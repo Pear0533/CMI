@@ -69,7 +69,7 @@ namespace ECN.MediaPlayer
         /// <summary>
         ///     The length of time to crossfade over.
         /// </summary>
-        public int CrossfadeTime = 5;
+        public float CrossfadeTime = 5;
 
         private int CrossfadeTotalRunTime;
 
@@ -79,7 +79,7 @@ namespace ECN.MediaPlayer
         /// <summary>
         ///     The length of time to fade over.
         /// </summary>
-        public int FadeTime = 5;
+        public float FadeTime = 5;
         private int FadeTotalRunTime;
         private float FadeVolumeAdjustment;
 

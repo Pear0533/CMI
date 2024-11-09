@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using System.Timers;
 using System.Windows.Forms;
 using ECN.MediaPlayer;
 using memory;
@@ -42,11 +41,13 @@ namespace CMI
         private static readonly MediaPlayer musicMediaPlayer = new MediaPlayer(0, true, 0);
         private static readonly MediaPlayer soundEffectsMediaPlayer = new MediaPlayer(0, true, 0);
         private static readonly MediaPlayer voiceMediaPlayer = new MediaPlayer(0, true, 0);
+        private static CMI form;
 
         public CMI()
         {
             InitializeComponent();
             CenterToScreen();
+            form = this;
         }
 
         [DllImport("kernel32.dll")]
@@ -82,6 +83,16 @@ namespace CMI
             return ReadByte((IntPtr)ReadLong((IntPtr)baseAddress + 0x58) + offset) * 10;
         }
 
+        private static bool IsHPZero()
+        {
+            IntPtr addr = (IntPtr)(ReadLong(worldChrMan) + 0x10EF8);
+            addr = (IntPtr)ReadLong(addr);
+            addr = (IntPtr)(ReadLong(addr) + 0x190);
+            addr = (IntPtr)ReadLong(addr);
+            addr = (IntPtr)(ReadLong(addr) + 0x138);
+            return ReadInt(addr) == 0;
+        }
+
         private static bool IsHPInvalid()
         {
             IntPtr addr = (IntPtr)(ReadLong(worldChrMan) + 0x10EF8);
@@ -89,7 +100,6 @@ namespace CMI
             addr = (IntPtr)(ReadLong(addr) + 0x190);
             addr = (IntPtr)ReadLong(addr);
             addr = (IntPtr)(ReadLong(addr) + 0x138);
-            // TODO: Double check
             return addr.ToInt64() == 312;
         }
 
@@ -343,7 +353,8 @@ namespace CMI
 
         public class SoundEvent
         {
-            public readonly Timer LoopTimer = new Timer();
+            public readonly Timer FadeOutTimer = new Timer();
+            public readonly AccurateTimer LoopTimer = new AccurateTimer();
             public bool Activated { get; set; }
             public MediaPlayer MediaPlayer { get; set; }
             public string Name { get; set; }
@@ -354,9 +365,10 @@ namespace CMI
             public int Pointer2 { get; set; }
             public int Startbit { get; set; }
             public int Type { get; set; }
-            public int FadeInterval { get; set; }
+            public float FadeInSeconds { get; set; }
+            public int FadeOutSeconds { get; set; }
+            public bool FadeIntoNextTrack { get; set; }
             public bool Loop { get; set; }
-            public int StartSeconds { get; set; }
             public int LoopStartSeconds { get; set; }
 
             public static SoundEvent Serialize(string name, JObject soundEventJson)
@@ -370,9 +382,10 @@ namespace CMI
                     Pointer2 = Convert.ToInt32(soundEventJson.GetValue("Pointer2").ToString(), 16),
                     Startbit = Convert.ToInt32(soundEventJson.GetValue("Startbit").ToString(), 16),
                     Type = Convert.ToInt32(soundEventJson.GetValue("Type").ToString()),
-                    FadeInterval = Convert.ToInt32(soundEventJson.GetValue("FadeInterval").ToString()),
+                    FadeInSeconds = Convert.ToSingle(soundEventJson.GetValue("FadeInSeconds").ToString()),
+                    FadeOutSeconds = Convert.ToInt32(soundEventJson.GetValue("FadeOutSeconds").ToString()),
+                    FadeIntoNextTrack = bool.Parse(soundEventJson.GetValue("FadeIntoNextTrack").ToString()),
                     Loop = bool.Parse(soundEventJson.GetValue("Loop").ToString()),
-                    StartSeconds = Convert.ToInt32(soundEventJson.GetValue("StartSeconds").ToString()),
                     LoopStartSeconds = Convert.ToInt32(soundEventJson.GetValue("LoopStartSeconds").ToString())
                 };
                 soundEvent.MediaPlayer = soundEvent.GetMediaPlayer();
@@ -401,39 +414,56 @@ namespace CMI
 
             public bool ShouldStopEvent(TreeView soundEventsListBox)
             {
-                return IsHPInvalid() || !Activated && soundEventsListBox.SelectedNode == EventNode && MediaPlayer.CurrentSong == SoundPath;
+                return !MediaPlayer.inFade && IsHPZero() || IsHPInvalid() || !Activated && soundEventsListBox.SelectedNode == EventNode;
             }
 
             public bool ShouldPlayEvent()
             {
-                return !IsHPInvalid() && Activated && !DoesOtherEventOverride() && MediaPlayer.CurrentSong != SoundPath;
+                return !IsHPZero() && !IsHPInvalid() && Activated && !DoesOtherEventOverride() && MediaPlayer.CurrentSong != SoundPath;
             }
 
             public void StopEvent()
             {
-                MediaPlayer.CurrentSong = null;
-                MediaPlayer.Stop(false);
+                bool isHPZero = IsHPZero();
+                if (!IsHPInvalid() && !isHPZero && FadeIntoNextTrack) return;
+                if (IsHPInvalid() || !isHPZero && FadeOutSeconds == 0)
+                {
+                    MediaPlayer.CurrentSong = null;
+                    MediaPlayer.Stop(false);
+                    MediaPlayer.Volume = 0;
+                }
+                else if (MediaPlayer.Volume > 0)
+                {
+                    int fadeOutSeconds = isHPZero ? 5 : FadeOutSeconds;
+                    MediaPlayer.FadeTime = fadeOutSeconds;
+                    MediaPlayer.Fade(0);
+                    FadeOutTimer.Elapsed += (s, e) =>
+                    {
+                        MediaPlayer.CurrentSong = null;
+                        MediaPlayer.Stop(false);
+                        MediaPlayer.Volume = 0;
+                        FadeOutTimer.Stop();
+                    };
+                    FadeOutTimer.Interval = fadeOutSeconds * 1000;
+                    FadeOutTimer.Start();
+                }
             }
 
             public void PlayEvent()
             {
                 if (Loop)
                 {
-                    // TODO: We might need to adjust this to work for all end user systems...
-                    LoopTimer.Interval = 1;
-                    LoopTimer.Elapsed -= OnTimedEvent;
-                    LoopTimer.Elapsed += OnTimedEvent;
-                    LoopTimer.Start();
+                    LoopTimer.Stop();
+                    LoopTimer.Start(form, OnTimedEvent, 1);
                 }
-                MediaPlayer.FadeTime = FadeInterval;
-                MediaPlayer.CrossfadeTime = FadeInterval;
-                MediaPlayer.Play(SoundPath, FadeInterval > 0);
-                MediaPlayer.CurrentSong = SoundPath;
+                MediaPlayer.Crossfade = true;
+                MediaPlayer.FadeTime = FadeInSeconds;
+                MediaPlayer.CrossfadeTime = FadeInSeconds;
+                MediaPlayer.Play(SoundPath, FadeInSeconds > 0);
                 // TODO: We also need to correctly set the UI player position...
-                MediaPlayer.Position = StartSeconds;
             }
 
-            private void OnTimedEvent(object source, ElapsedEventArgs e)
+            private void OnTimedEvent()
             {
                 if (MediaPlayer.CurrentSong != SoundPath || MediaPlayer.Position <= 0) return;
                 // TODO: Allow for setting StartSeconds and LoopStartSeconds in milliseconds...

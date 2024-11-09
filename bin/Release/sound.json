@@ -5,9 +5,10 @@
     "Pointer2": "0x16293E",
     "Startbit": 2,
     "Type": 4,
-    "FadeInterval": 0,
+    "FadeInSeconds": 4,
+    "FadeOutSeconds": 0,
+    "FadeIntoNextTrack": true,
     "Loop": true,
-    "StartSeconds": 0,
     "LoopStartSeconds": 2
   },
   "MatriarchChange": {
@@ -16,9 +17,10 @@
     "Pointer2": "0x16293E",
     "Startbit": 4,
     "Type": 4,
-    "FadeInterval": 1,
+    "FadeInSeconds": 1,
+    "FadeOutSeconds": 0,
+    "FadeIntoNextTrack": true,
     "Loop": false,
-    "StartSeconds": 0,
     "LoopStartSeconds": 0
   },
   "MatriarchP2": {
@@ -27,9 +29,10 @@
     "Pointer2": "0x16293E",
     "Startbit": 5,
     "Type": 4,
-    "FadeInterval": 0,
+    "FadeInSeconds": 0.15,
+    "FadeOutSeconds": 0,
+    "FadeIntoNextTrack": true,
     "Loop": true,
-    "StartSeconds": 0,
     "LoopStartSeconds": 0
   },
   "MatriarchDeath": {
@@ -38,9 +41,10 @@
     "Pointer2": "0x162844",
     "Startbit": 2,
     "Type": 4,
-    "FadeInterval": 1,
+    "FadeInSeconds": 1.5,
+    "FadeOutSeconds": 0,
+    "FadeIntoNextTrack": false,
     "Loop": false,
-    "StartSeconds": 0,
     "LoopStartSeconds": 0
   },
   "ShabibiStart": {
@@ -49,9 +53,10 @@
     "Pointer2": "0xA7F24",
     "Startbit": 6,
     "Type": 4,
-    "FadeInterval": 0,
+    "FadeInSeconds": 0,
+    "FadeOutSeconds": 0,
+    "FadeIntoNextTrack": false,
     "Loop": true,
-    "StartSeconds": 0,
     "LoopStartSeconds": 0
   },
   "ShabibiChange": {
@@ -60,9 +65,10 @@
     "Pointer2": "0xA7F24",
     "Startbit": 4,
     "Type": 4,
-    "FadeInterval": 1,
+    "FadeInSeconds": 1,
+    "FadeOutSeconds": 0,
+    "FadeIntoNextTrack": false,
     "Loop": false,
-    "StartSeconds": 0,
     "LoopStartSeconds": 0
   },
   "ShabibiP2": {
@@ -71,9 +77,10 @@
     "Pointer2": "0xA7F24",
     "Startbit": 5,
     "Type": 4,
-    "FadeInterval": 0,
+    "FadeInSeconds": 0,
+    "FadeOutSeconds": 0,
+    "FadeIntoNextTrack": false,
     "Loop": true,
-    "StartSeconds": 0,
     "LoopStartSeconds": 0
   },
   "ShabibiDeath": {
@@ -82,9 +89,10 @@
     "Pointer2": "0xA7EA6",
     "Startbit": 3,
     "Type": 4,
-    "FadeInterval": 1,
+    "FadeInSeconds": 1,
+    "FadeOutSeconds": 0,
+    "FadeIntoNextTrack": false,
     "Loop": false,
-    "StartSeconds": 0,
     "LoopStartSeconds": 0
   },
   "SigurStart": {
@@ -93,9 +101,10 @@
     "Pointer2": "0x152EC7",
     "Startbit": 0,
     "Type": 4,
-    "FadeInterval": 0,
+    "FadeInSeconds": 0,
+    "FadeOutSeconds": 0,
+    "FadeIntoNextTrack": false,
     "Loop": true,
-    "StartSeconds": 0,
     "LoopStartSeconds": 0
   },
   "SigurDeath": {
@@ -104,9 +113,10 @@
     "Pointer2": "0x152DCD",
     "Startbit": 3,
     "Type": 4,
-    "FadeInterval": 0,
+    "FadeInSeconds": 0,
+    "FadeOutSeconds": 0,
+    "FadeIntoNextTrack": false,
     "Loop": false,
-    "StartSeconds": 0,
     "LoopStartSeconds": 0
   },
   "DakkStart": {
@@ -115,9 +125,10 @@
     "Pointer2": "0xED63E",
     "Startbit": 2,
     "Type": 4,
-    "FadeInterval": 0,
+    "FadeInSeconds": 0,
+    "FadeOutSeconds": 0,
+    "FadeIntoNextTrack": false,
     "Loop": true,
-    "StartSeconds": 0,
     "LoopStartSeconds": 0
   },
   "DakkDeath": {
@@ -126,9 +137,10 @@
     "Pointer2": "0xED5C1",
     "Startbit": 2,
     "Type": 4,
-    "FadeInterval": 0,
+    "FadeInSeconds": 0,
+    "FadeOutSeconds": 0,
+    "FadeIntoNextTrack": false,
     "Loop": false,
-    "StartSeconds": 0,
     "LoopStartSeconds": 0
   },
   "ScionStart": {
@@ -137,9 +149,10 @@
     "Pointer2": "0x154D86",
     "Startbit": 7,
     "Type": 4,
-    "FadeInterval": 0,
+    "FadeInSeconds": 4,
+    "FadeOutSeconds": 8,
+    "FadeIntoNextTrack": false,
     "Loop": true,
-    "StartSeconds": 0,
     "LoopStartSeconds": 2
   },
   "ScionP2": {
@@ -148,9 +161,10 @@
     "Pointer2": "0x154D86",
     "Startbit": 4,
     "Type": 4,
-    "FadeInterval": 0,
+    "FadeInSeconds": 0,
+    "FadeOutSeconds": 0,
+    "FadeIntoNextTrack": true,
     "Loop": true,
-    "StartSeconds": 0,
     "LoopStartSeconds": 0
   },
   "ScionDeath": {
@@ -159,9 +173,10 @@
     "Pointer2": "0x154C8B",
     "Startbit": 0,
     "Type": 4,
-    "FadeInterval": 0,
+    "FadeInSeconds": 0.35,
+    "FadeOutSeconds": 0,
+    "FadeIntoNextTrack": false,
     "Loop": false,
-    "StartSeconds": 0,
     "LoopStartSeconds": 0
   }
 }

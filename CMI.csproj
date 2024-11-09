@@ -79,6 +79,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccurateTimer.cs" />
     <Compile Include="CMI.cs">
       <SubType>Form</SubType>
     </Compile>
