@@ -46,7 +46,6 @@ namespace CMI
         private void TimerCallback(int id, int msg, IntPtr user, int dw1, int dw2)
         {
             if (mTimerId != 0)
-                // TODO: WIP
                 mForm.Invoke(mAction);
         }
 

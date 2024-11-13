@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
 using ECN.MediaPlayer;
 using memory;
@@ -42,6 +43,9 @@ namespace CMI
         private static readonly MediaPlayer soundEffectsMediaPlayer = new MediaPlayer(0, true, 0);
         private static readonly MediaPlayer voiceMediaPlayer = new MediaPlayer(0, true, 0);
         private static CMI form;
+        private static readonly Timer cooldownTimer = new Timer();
+        private static readonly Timer fadeOutTimer = new Timer();
+        private static readonly AccurateTimer loopTimer = new AccurateTimer();
 
         public CMI()
         {
@@ -353,8 +357,6 @@ namespace CMI
 
         public class SoundEvent
         {
-            public readonly Timer FadeOutTimer = new Timer();
-            public readonly AccurateTimer LoopTimer = new AccurateTimer();
             public bool Activated { get; set; }
             public MediaPlayer MediaPlayer { get; set; }
             public string Name { get; set; }
@@ -366,10 +368,10 @@ namespace CMI
             public int Startbit { get; set; }
             public int Type { get; set; }
             public float FadeInSeconds { get; set; }
-            public int FadeOutSeconds { get; set; }
+            public float FadeOutSeconds { get; set; }
             public bool FadeIntoNextTrack { get; set; }
             public bool Loop { get; set; }
-            public int LoopStartSeconds { get; set; }
+            public float LoopStartSeconds { get; set; }
 
             public static SoundEvent Serialize(string name, JObject soundEventJson)
             {
@@ -383,10 +385,10 @@ namespace CMI
                     Startbit = Convert.ToInt32(soundEventJson.GetValue("Startbit").ToString(), 16),
                     Type = Convert.ToInt32(soundEventJson.GetValue("Type").ToString()),
                     FadeInSeconds = Convert.ToSingle(soundEventJson.GetValue("FadeInSeconds").ToString()),
-                    FadeOutSeconds = Convert.ToInt32(soundEventJson.GetValue("FadeOutSeconds").ToString()),
+                    FadeOutSeconds = Convert.ToSingle(soundEventJson.GetValue("FadeOutSeconds").ToString()),
                     FadeIntoNextTrack = bool.Parse(soundEventJson.GetValue("FadeIntoNextTrack").ToString()),
                     Loop = bool.Parse(soundEventJson.GetValue("Loop").ToString()),
-                    LoopStartSeconds = Convert.ToInt32(soundEventJson.GetValue("LoopStartSeconds").ToString())
+                    LoopStartSeconds = Convert.ToSingle(soundEventJson.GetValue("LoopStartSeconds").ToString())
                 };
                 soundEvent.MediaPlayer = soundEvent.GetMediaPlayer();
                 return soundEvent;
@@ -414,7 +416,7 @@ namespace CMI
 
             public bool ShouldStopEvent(TreeView soundEventsListBox)
             {
-                return !MediaPlayer.inFade && IsHPZero() || IsHPInvalid() || !Activated && soundEventsListBox.SelectedNode == EventNode;
+                return !MediaPlayer.inFade && IsHPZero() || IsHPInvalid() || !Activated && soundEventsListBox.SelectedNode == EventNode && MediaPlayer.CurrentSong == SoundPath;
             }
 
             public bool ShouldPlayEvent()
@@ -426,26 +428,32 @@ namespace CMI
             {
                 bool isHPZero = IsHPZero();
                 if (!IsHPInvalid() && !isHPZero && FadeIntoNextTrack) return;
-                if (IsHPInvalid() || !isHPZero && FadeOutSeconds == 0)
+                if (cooldownTimer.Enabled || IsHPInvalid() || !isHPZero && FadeOutSeconds == 0)
                 {
                     MediaPlayer.CurrentSong = null;
                     MediaPlayer.Stop(false);
-                    MediaPlayer.Volume = 0;
+                    if (cooldownTimer.Enabled || !IsHPInvalid()) return;
+                    cooldownTimer.Interval = 5000;
+                    cooldownTimer.AutoReset = false;
+                    cooldownTimer.Start();
                 }
-                else if (MediaPlayer.Volume > 0)
+                else
                 {
-                    int fadeOutSeconds = isHPZero ? 5 : FadeOutSeconds;
+                    float fadeOutSeconds = isHPZero ? 5 : FadeOutSeconds;
                     MediaPlayer.FadeTime = fadeOutSeconds;
                     MediaPlayer.Fade(0);
-                    FadeOutTimer.Elapsed += (s, e) =>
+
+                    void OnFadeOutTimerOnElapsed(object s, ElapsedEventArgs e)
                     {
                         MediaPlayer.CurrentSong = null;
                         MediaPlayer.Stop(false);
-                        MediaPlayer.Volume = 0;
-                        FadeOutTimer.Stop();
-                    };
-                    FadeOutTimer.Interval = fadeOutSeconds * 1000;
-                    FadeOutTimer.Start();
+                    }
+
+                    fadeOutTimer.Elapsed -= OnFadeOutTimerOnElapsed;
+                    fadeOutTimer.Elapsed += OnFadeOutTimerOnElapsed;
+                    fadeOutTimer.Interval = fadeOutSeconds * 1000;
+                    fadeOutTimer.AutoReset = false;
+                    fadeOutTimer.Start();
                 }
             }
 
@@ -453,8 +461,8 @@ namespace CMI
             {
                 if (Loop)
                 {
-                    LoopTimer.Stop();
-                    LoopTimer.Start(form, OnTimedEvent, 1);
+                    loopTimer.Stop();
+                    loopTimer.Start(form, OnTimedEvent, 1);
                 }
                 MediaPlayer.Crossfade = true;
                 MediaPlayer.FadeTime = FadeInSeconds;
@@ -466,7 +474,6 @@ namespace CMI
             private void OnTimedEvent()
             {
                 if (MediaPlayer.CurrentSong != SoundPath || MediaPlayer.Position <= 0) return;
-                // TODO: Allow for setting StartSeconds and LoopStartSeconds in milliseconds...
                 if (Math.Abs(MediaPlayer.Position - MediaPlayer.Duration) < 0.25)
                     MediaPlayer.Position = LoopStartSeconds;
             }
