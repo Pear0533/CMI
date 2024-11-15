@@ -59,8 +59,8 @@ namespace ECN.MediaPlayer
         private readonly Timer CrossfadeTimer = new Timer();
         private readonly Timer FadeTimer = new Timer();
 
-        private readonly WindowsMediaPlayerClass Player1 = new WindowsMediaPlayerClass();
-        private readonly WindowsMediaPlayerClass Player2 = new WindowsMediaPlayerClass();
+        public readonly WindowsMediaPlayerClass Player1 = new WindowsMediaPlayerClass();
+        public readonly WindowsMediaPlayerClass Player2 = new WindowsMediaPlayerClass();
 
         /// <summary>
         ///     Whether the player should crossfade or not.

@@ -42,16 +42,13 @@ namespace CMI
         private static readonly MediaPlayer musicMediaPlayer = new MediaPlayer(0, true, 0);
         private static readonly MediaPlayer soundEffectsMediaPlayer = new MediaPlayer(0, true, 0);
         private static readonly MediaPlayer voiceMediaPlayer = new MediaPlayer(0, true, 0);
-        private static CMI form;
         private static readonly Timer cooldownTimer = new Timer();
         private static readonly Timer fadeOutTimer = new Timer();
-        private static readonly AccurateTimer loopTimer = new AccurateTimer();
 
         public CMI()
         {
             InitializeComponent();
             CenterToScreen();
-            form = this;
         }
 
         [DllImport("kernel32.dll")]
@@ -459,23 +456,13 @@ namespace CMI
 
             public void PlayEvent()
             {
-                if (Loop)
-                {
-                    loopTimer.Stop();
-                    loopTimer.Start(form, OnTimedEvent, 1);
-                }
+                MediaPlayer.Player1.settings.setMode("loop", Loop);
+                MediaPlayer.Player2.settings.setMode("loop", Loop);
                 MediaPlayer.Crossfade = true;
                 MediaPlayer.FadeTime = FadeInSeconds;
                 MediaPlayer.CrossfadeTime = FadeInSeconds;
                 MediaPlayer.Play(SoundPath, FadeInSeconds > 0);
                 // TODO: We also need to correctly set the UI player position...
-            }
-
-            private void OnTimedEvent()
-            {
-                if (MediaPlayer.CurrentSong != SoundPath || MediaPlayer.Position <= 0) return;
-                if (Math.Abs(MediaPlayer.Position - MediaPlayer.Duration) < 0.25)
-                    MediaPlayer.Position = LoopStartSeconds;
             }
 
             private MediaPlayer GetMediaPlayer()
