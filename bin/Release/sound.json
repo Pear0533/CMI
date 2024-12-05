@@ -38,8 +38,8 @@
   "MatriarchDeath": {
     "SoundPath": "MatriarchEnd.wav",
     "Pointer1": "0x28",
-    "Pointer2": "0x162844",
-    "Startbit": 2,
+    "Pointer2": "0x162ABA",
+    "Startbit": 7,
     "Type": 4,
     "FadeInSeconds": 1.5,
     "FadeOutSeconds": 0,
@@ -86,7 +86,7 @@
   "ShabibiDeath": {
     "SoundPath": "ShabibiEnd.mp3",
     "Pointer1": "0x28",
-    "Pointer2": "0xA7EA6",
+    "Pointer2": "0xA7F23",
     "Startbit": 3,
     "Type": 4,
     "FadeInSeconds": 1,
@@ -110,8 +110,8 @@
   "SigurDeath": {
     "SoundPath": "SigurEnd.mp3",
     "Pointer1": "0x28",
-    "Pointer2": "0x152DCD",
-    "Startbit": 3,
+    "Pointer2": "0x152ECB",
+    "Startbit": 2,
     "Type": 4,
     "FadeInSeconds": 0,
     "FadeOutSeconds": 0,
@@ -134,8 +134,8 @@
   "DakkDeath": {
     "SoundPath": "DakkEnd.mp3",
     "Pointer1": "0x28",
-    "Pointer2": "0xED5C1",
-    "Startbit": 2,
+    "Pointer2": "0xED641",
+    "Startbit": 6,
     "Type": 4,
     "FadeInSeconds": 0,
     "FadeOutSeconds": 0,
@@ -170,8 +170,8 @@
   "ScionDeath": {
     "SoundPath": "ScionEnd.wav",
     "Pointer1": "0x28",
-    "Pointer2": "0x154C8B",
-    "Startbit": 0,
+    "Pointer2": "0x154D87",
+    "Startbit": 6,
     "Type": 4,
     "FadeInSeconds": 0.35,
     "FadeOutSeconds": 0,
