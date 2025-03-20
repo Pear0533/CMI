@@ -411,9 +411,11 @@ namespace CMI
                 return soundEvents.IndexOf(overrideSoundEvent) >= soundEvents.IndexOf(this);
             }
 
+            // TODO: Double check
+
             public bool ShouldStopEvent(TreeView soundEventsListBox)
             {
-                return !MediaPlayer.inFade && IsHPZero() || IsHPInvalid() || !Activated && soundEventsListBox.SelectedNode == EventNode && MediaPlayer.CurrentSong == SoundPath;
+                return cooldownTimer.Enabled || !MediaPlayer.inFade && IsHPZero() || IsHPInvalid() || !Activated && soundEventsListBox.SelectedNode == EventNode && MediaPlayer.CurrentSong == SoundPath;
             }
 
             public bool ShouldPlayEvent()
@@ -424,7 +426,7 @@ namespace CMI
             public void StopEvent()
             {
                 bool isHPZero = IsHPZero();
-                if (!IsHPInvalid() && !isHPZero && FadeIntoNextTrack) return;
+                if (!cooldownTimer.Enabled && !IsHPInvalid() && !isHPZero && FadeIntoNextTrack) return;
                 if (cooldownTimer.Enabled || IsHPInvalid() || !isHPZero && FadeOutSeconds == 0)
                 {
                     MediaPlayer.CurrentSong = null;
