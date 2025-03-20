@@ -42,6 +42,6 @@ C:\Users\Isaac Fisher\Downloads\CMI\obj\Release\CMI.CMI.resources
 C:\Users\Isaac Fisher\Downloads\CMI\obj\Release\CMI.Properties.Resources.resources
 C:\Users\Isaac Fisher\Downloads\CMI\obj\Release\CMI.csproj.GenerateResource.cache
 C:\Users\Isaac Fisher\Downloads\CMI\obj\Release\CMI.csproj.CoreCompileInputs.cache
-C:\Users\Isaac Fisher\Downloads\CMI\obj\Release\CMI.csproj.CopyComplete
 C:\Users\Isaac Fisher\Downloads\CMI\obj\Release\CMI.dll
 C:\Users\Isaac Fisher\Downloads\CMI\obj\Release\CMI.pdb
+C:\Users\Isaac Fisher\Downloads\CMI\obj\Release\CMI.csproj.Up2Date
