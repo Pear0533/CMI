@@ -60,6 +60,12 @@
     <Reference Include="memory">
       <HintPath>.\memory.dll</HintPath>
     </Reference>
+    <Reference Include="NAudio.Core, Version=2.2.1.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
+      <HintPath>packages\NAudio.Core.2.2.1\lib\netstandard2.0\NAudio.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.Wasapi, Version=2.2.1.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
+      <HintPath>packages\NAudio.Wasapi.2.2.1\lib\netstandard2.0\NAudio.Wasapi.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -154,9 +160,12 @@
   <PropertyGroup>
     <PostBuildEvent>set RootModFolder=ConvergenceER
 set ModFolder=mod
-"$(ProjectDir)tools\ILMerge\tools\net452\ILMerge.exe" /out:"$(ProjectDir)..\%25RootModFolder%25\%25ModFolder%25\CMI.dll" /ndebug "$(TargetDir)CMI.dll" "$(TargetDir)AxInterop.WMPLib.dll" "$(TargetDir)Interop.WMPLib.dll" "$(TargetDir)memory.dll" "$(TargetDir)Newtonsoft.Json.Bson.dll" "$(TargetDir)Newtonsoft.Json.dll"
+"$(ProjectDir)tools\ILMerge\tools\net452\ILMerge.exe" /out:"$(ProjectDir)..\%25RootModFolder%25\%25ModFolder%25\CMI.dll" /ndebug "$(TargetDir)CMI.dll" "$(TargetDir)AxInterop.WMPLib.dll" "$(TargetDir)Interop.WMPLib.dll" "$(TargetDir)memory.dll" "$(TargetDir)Newtonsoft.Json.Bson.dll" "$(TargetDir)Newtonsoft.Json.dll"  "$(TargetDir)NAudio.Core.dll" "$(TargetDir)NAudio.Wasapi.dll"
 copy "$(TargetDir)sound.json" "$(ProjectDir)..\%25RootModFolder%25\%25ModFolder%25\sound.json"
 echo @echo off &gt; "$(ProjectDir)tools\run_cmi.bat"
 echo start /B powershell -WindowStyle Hidden -Command "Add-Type -Path '../../%25RootModFolder%25/%25ModFolder%25/CMI.dll'; [CMI.CMI]::Main()" &gt;&gt; "$(ProjectDir)tools\run_cmi.bat"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(OutputType)' == 'WinExe'">
+    <DefineConstants>IS_EXECUTABLE</DefineConstants>
   </PropertyGroup>
 </Project>

@@ -10,9 +10,13 @@ using System.Timers;
 using System.Windows.Forms;
 using ECN.MediaPlayer;
 using memory;
+using NAudio.CoreAudioApi;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Timer = System.Timers.Timer;
+
+// ReSharper disable HeuristicUnreachableCode
+#pragma warning disable CS0162
 
 namespace CMI
 {
@@ -23,7 +27,7 @@ namespace CMI
         private const string worldChrManQuery = "48 8B 05 ?? ?? ?? ?? 48 85 C0 74 0F 48 39 88";
         // TODO: WIP
         private const string menuManQuery = "";
-        public static string appRootPath = $"{Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)}";
+        public static string appRootPath;
         public static string modSoundFolderPath;
         public static string soundJsonFilePath;
         private static JObject soundJson;
@@ -230,9 +234,12 @@ namespace CMI
         private int GetCurrentVolume(int valueOffset, SoundEvent soundEvent = null, int savedVolume = -1)
         {
             int currentVolume = ReadVolume(gameDataMan, valueOffset);
-            if (soundEvent != null)
+            int erWinVolume = GetERWinVolume();
+            if (soundEvent != null && soundEvent.Activated)
             {
                 currentVolume = (int)((double)currentVolume / 100 * masterVolume / 100 * 100);
+                // TODO: Double check
+                currentVolume = (int)(currentVolume * (erWinVolume / 100.0));
                 soundEvent.MediaPlayer.Volume = currentVolume;
             }
             if (savedVolume == -1 && soundEvent != null) savedVolume = soundEvent.Volume;
@@ -240,6 +247,25 @@ namespace CMI
             string volumeHost = soundEvent == null ? "Master" : soundEvent.Name;
             SendStatusLogMessage($"{volumeHost} volume changed to {currentVolume}%");
             return currentVolume;
+        }
+
+        private static int GetERWinVolume()
+        {
+            int appVolume = 100;
+            MMDeviceEnumerator enumerator = new MMDeviceEnumerator();
+            MMDevice defaultDevice = enumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
+            AudioSessionManager sessionManager = defaultDevice.AudioSessionManager;
+            for (int i = 0; i < sessionManager.Sessions.Count; i++)
+            {
+                AudioSessionControl session = sessionManager.Sessions[i];
+                uint process = session.GetProcessID;
+                if (process == mainEldenRingProcess.Id)
+                {
+                    appVolume = (int)(session.SimpleAudioVolume.Volume * 100);
+                    break;
+                }
+            }
+            return appVolume;
         }
 
         private void UpdateUISoundPlayerState(SoundEvent soundEvent)
@@ -328,10 +354,22 @@ namespace CMI
             if (e.Node.Parent == null) UpdateUISoundPlayerState(soundEvents[e.Node.Index]);
         }
 
+#if IS_EXECUTABLE
+        [STAThread]
+#endif
         public static void Main()
         {
             try
             {
+#if IS_EXECUTABLE
+                // TODO: Substitute with actual root mod folder and mod folder from post-build events...
+                // TODO: Find out a better way to move up a directory (you should already have a method for this in RML)...
+                string location = Assembly.GetExecutingAssembly().Location;
+                appRootPath = $"{Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(location))))}\\ConvergenceER\\mod";
+#else
+        string location = Assembly.GetExecutingAssembly().Location;
+        appRootPath = $"{Path.GetDirectoryName(location)}";
+#endif
                 modSoundFolderPath = $"{appRootPath}\\sound";
                 soundJsonFilePath = $"{appRootPath}\\sound.json";
             }
@@ -415,7 +453,10 @@ namespace CMI
 
             public bool ShouldStopEvent(TreeView soundEventsListBox)
             {
-                return cooldownTimer.Enabled || !MediaPlayer.inFade && IsHPZero() || IsHPInvalid() || !Activated && soundEventsListBox.SelectedNode == EventNode && MediaPlayer.CurrentSong == SoundPath;
+                return cooldownTimer.Enabled
+                    || !MediaPlayer.inFade && IsHPZero()
+                    || IsHPInvalid()
+                    || !Activated && soundEventsListBox.SelectedNode == EventNode && MediaPlayer.CurrentSong == SoundPath;
             }
 
             public bool ShouldPlayEvent()
