@@ -194,7 +194,7 @@ namespace CMI
             }
             SendStatusLogMessage("Attaching to ELDEN RING...");
             mainEldenRingProcess = eldenRingProcesses[0];
-            eldenRingProcessHandle = OpenProcess(0x001F0FFF, false, mainEldenRingProcess.Id);
+            eldenRingProcessHandle = OpenProcess(0x00000010, false, mainEldenRingProcess.Id);
             SendStatusLogMessage($"ELDEN RING process ID: {eldenRingProcessHandle}");
             PostAttachToGameSetup();
             BeginGameStateTimer();
